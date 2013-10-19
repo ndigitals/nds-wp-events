@@ -1,23 +1,21 @@
 <?php
 /**
- * Plugin Name.
+ * NDS WordPress Events.
  *
- * @package   Plugin_Name
- * @author    Your Name <email@example.com>
+ * @package   NDS_WordPress_Events
+ * @author    Tim Nolte <tim.nolte@ndigitals.com>
  * @license   GPL-2.0+
- * @link      http://example.com
- * @copyright 2013 Your Name or Company Name
+ * @link      http://www.ndigitals.com
+ * @copyright 2013 NDigital Solutions
  */
 
 /**
  * Plugin class.
  *
- * TODO: Rename this class to a proper name for your plugin.
- *
- * @package Plugin_Name
- * @author  Your Name <email@example.com>
+ * @package NDS_WP_Events
+ * @author  Tim Nolte <tim.nolte@ndigitals.com>
  */
-class Plugin_Name {
+class NDS_WP_Events {
 
 	/**
 	 * Plugin version, used for cache-busting of style and script file references.
@@ -38,7 +36,7 @@ class Plugin_Name {
 	 *
 	 * @var      string
 	 */
-	protected $plugin_slug = 'plugin-name';
+	protected $plugin_slug = 'nds-wp-events';
 
 	/**
 	 * Instance of this class.
@@ -67,8 +65,8 @@ class Plugin_Name {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		// Define custom functionality. Read more about actions and filters: http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
-		add_action( 'TODO', array( $this, 'action_method_name' ) );
-		add_filter( 'TODO', array( $this, 'filter_method_name' ) );
+		/*add_action( 'TODO', array( $this, 'action_method_name' ) );
+		add_filter( 'TODO', array( $this, 'filter_method_name' ) );*/
 
 	}
 
@@ -217,7 +215,7 @@ class Plugin_Name {
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
 		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, FALSE, basename( dirname( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( $domain, FALSE, basename( dirname( __FILE__ ) ) . '/lang' );
 	}
 
 	/**
@@ -226,7 +224,7 @@ class Plugin_Name {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_slug . '-plugin-styles', plugins_url( 'css/public.css', __FILE__ ), array(), self::VERSION );
+		wp_enqueue_style( $this->plugin_slug . '-plugin-styles', plugins_url( 'assets/css/frontend.css', __FILE__ ), array(), self::VERSION );
 	}
 
 	/**
@@ -235,7 +233,7 @@ class Plugin_Name {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery' ), self::VERSION );
+		wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'assets/js/frontend.js', __FILE__ ), array( 'jquery' ), self::VERSION );
 	}
 
 	/**

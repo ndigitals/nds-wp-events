@@ -2,22 +2,20 @@
 /**
  * Plugin Name.
  *
- * @package   Plugin_Name\Admin
- * @author    Your Name <email@example.com>
+ * @package   NDS_WordPress_Events\Admin
+ * @author    Tim Nolte <tim.nolte@ndigitals.com>
  * @license   GPL-2.0+
- * @link      http://example.com
- * @copyright 2013 Your Name or Company Name
+ * @link      http://www.ndigitals.com
+ * @copyright 2013 NDigital Solutions
  */
 
 /**
  * Plugin Admin class.
  *
- * TODO: Rename this class to a proper name for your plugin.
- *
- * @package Plugin_Name_Admin
- * @author  Your Name <email@example.com>
+ * @package NDS_WordPress_Events_Admin
+ * @author  Tim Nolte <tim.nolte@ndigitals.com>
  */
-class Plugin_Name_Admin {
+class NDS_WordPress_Events_Admin {
 
 	/**
 	 * Instance of this class.
@@ -44,8 +42,8 @@ class Plugin_Name_Admin {
 	 */
 	private function __construct() {
 
-		// Call $plugin_slug from initial plugin class. TODO: Rename "Plugin_Name" to the name of your initial plugin class
-		$plugin = Plugin_Name::get_instance();
+		// Call $plugin_slug from initial plugin class.
+		$plugin = NDS_WP_Events::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
 
 		// Load admin style sheet and JavaScript.
@@ -56,7 +54,7 @@ class Plugin_Name_Admin {
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 
 		// Add an action link pointing to the options page. TODO: Rename "plugin-name.php" to the name your plugin
-		$plugin_basename = plugin_basename( plugin_dir_path( __FILE__ ) . 'plugin-name.php' );
+		$plugin_basename = plugin_basename( plugin_dir_path( __FILE__ ) . 'nds-wp-events.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
 
 		// Define custom functionality. Read more about actions and filters: http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
@@ -97,7 +95,7 @@ class Plugin_Name_Admin {
 
 		$screen = get_current_screen();
 		if ( $screen->id == $this->plugin_screen_hook_suffix ) {
-			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'css/admin.css', __FILE__ ), array(), Plugin_Name::VERSION );
+			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), Plugin_Name::VERSION );
 		}
 
 	}
@@ -117,7 +115,7 @@ class Plugin_Name_Admin {
 
 		$screen = get_current_screen();
 		if ( $screen->id == $this->plugin_screen_hook_suffix ) {
-			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'js/admin.js', __FILE__ ), array( 'jquery' ), Plugin_Name::VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Plugin_Name::VERSION );
 		}
 
 	}
@@ -143,8 +141,8 @@ class Plugin_Name_Admin {
 		 * Change 'manage_options' to the capability you see fit (http://codex.wordpress.org/Roles_and_Capabilities)
 		 */
 		$this->plugin_screen_hook_suffix = add_options_page(
-			__( 'Page Title', $this->plugin_slug ),
-			__( 'Menu Text', $this->plugin_slug ),
+			__( 'Events', $this->plugin_slug ),
+			__( 'Events', $this->plugin_slug ),
 			'manage_options',
 			$this->plugin_slug,
 			array( $this, 'display_plugin_admin_page' )
