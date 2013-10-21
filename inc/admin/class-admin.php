@@ -141,8 +141,8 @@ class NDS_WordPress_Events_Admin {
 		 * Change 'manage_options' to the capability you see fit (http://codex.wordpress.org/Roles_and_Capabilities)
 		 */
 		$this->plugin_screen_hook_suffix = add_options_page(
-			__( 'Events', $this->plugin_slug ),
-			__( 'Events', $this->plugin_slug ),
+			__( 'Events Settings', $this->plugin_slug ),
+			__( 'Events Settings', $this->plugin_slug ),
 			'manage_options',
 			$this->plugin_slug,
 			array( $this, 'display_plugin_admin_page' )
@@ -156,7 +156,7 @@ class NDS_WordPress_Events_Admin {
 	 * @since    1.0.0
 	 */
 	public function display_plugin_admin_page() {
-		include_once( 'views/admin.php' );
+		include_once( 'inc/admin/settings.php' );
 	}
 
 	/**
