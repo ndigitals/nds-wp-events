@@ -45,9 +45,9 @@ class NDS_WordPress_Events_Admin
     {
 
         // Call $plugin_slug from initial plugin class.
-        $plugin                           = NDS_WP_Events::get_instance();
-        $this->plugin_slug                = $plugin->get_plugin_slug();
-        $this->plugin_post_type           = $plugin->get_plugin_post_type();
+        $plugin                 = NDS_WP_Events::get_instance();
+        $this->plugin_slug      = $plugin->get_plugin_slug();
+        $this->plugin_post_type = $plugin->get_plugin_post_type();
 
         // Load admin style sheet and JavaScript.
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
@@ -109,7 +109,7 @@ class NDS_WordPress_Events_Admin
         }
 
         $screen = get_current_screen();
-        if ( $screen->id == $this->plugin_screen_hook_suffix )
+        if ( $screen->id == $this->plugin_screen_hook_suffix || $screen->post_type == $this->plugin_post_type )
         {
             wp_enqueue_style(
                 $this->plugin_slug . '-admin-styles',
@@ -137,7 +137,7 @@ class NDS_WordPress_Events_Admin
         }
 
         $screen = get_current_screen();
-        if ( $screen->id == $this->plugin_screen_hook_suffix )
+        if ( $screen->id == $this->plugin_screen_hook_suffix || $screen->post_type == $this->plugin_post_type )
         {
             wp_enqueue_script(
                 $this->plugin_slug . '-admin-script',
@@ -195,9 +195,9 @@ class NDS_WordPress_Events_Admin
         return array_merge(
             array(
                  'settings' => '<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_slug ) . '">' . __(
-                     'Settings',
-                     $this->plugin_slug
-                 ) . '</a>'
+                         'Settings',
+                         $this->plugin_slug
+                     ) . '</a>'
             ),
             $links
         );
@@ -411,9 +411,7 @@ class NDS_WordPress_Events_Admin
         $date_format = get_option( 'date_format' );
         $time_format = get_option( 'time_format' );
 
-        $meta_start_time = $meta_start_date = $this->get_event_field(
-            $this->plugin_post_type . '_start_date'
-        );
+        $meta_start_time = $meta_start_date = $this->get_event_field( $this->plugin_post_type . '_start_date' );
         $meta_end_time   = $meta_end_date = $this->get_event_field( $this->plugin_post_type . '_end_date' );
 
         // - populate today if empty, 00:00 for time -
@@ -457,41 +455,41 @@ class NDS_WordPress_Events_Admin
             <li class="clearfix">
                 <label>Location: </label><input type="text" size="70" name="<?php echo $this->plugin_post_type ?>_location"
                                                 value="<?php echo $this->get_event_field(
-                                                    $this->plugin_post_type . '_location'
+                                                                       $this->plugin_post_type . '_location'
                                                 ); ?>"/></li>
             <li class="clearfix">
                 <label>URL: </label><input type="text" size="70" name="<?php echo $this->plugin_post_type ?>_url"
                                            value="<?php echo $this->get_event_field(
-                                               $this->plugin_post_type . '_url'
+                                                                  $this->plugin_post_type . '_url'
                                            ); ?>"/> <em>(optional)</em></li>
         </ul>
         <style type="text/css">
-            . <?php echo $css_meta_class ?> {
+            .<?php echo $css_meta_class; ?> {
                 margin: 0 0 24px;
             }
 
-            .<?php echo $css_meta_class ?> li {
+            .<?php echo $css_meta_class; ?> li {
                 clear: left;
                 vertical-align: middle;
             }
 
-            .<?php echo $css_meta_class ?> label,
-            .<?php echo $css_meta_class ?> input,
-            .<?php echo $css_meta_class ?> em {
+            .<?php echo $css_meta_class; ?> label,
+            .<?php echo $css_meta_class; ?> input,
+            .<?php echo $css_meta_class; ?> em {
                 float: left;
             }
 
-            .<?php echo $css_meta_class ?> label,
-            .<?php echo $css_meta_class ?> em {
+            .<?php echo $css_meta_class; ?> label,
+            .<?php echo $css_meta_class; ?> em {
                 width: 100px;
                 padding: 5px 0 0 0;
             }
 
-            .<?php echo $css_meta_class ?> input {
+            .<?php echo $css_meta_class; ?> input {
                 margin-right: 4px;
             }
 
-            .<?php echo $css_meta_class ?> em {
+            .<?php echo $css_meta_class; ?> em {
                 color: gray;
             }
         </style>
@@ -602,9 +600,9 @@ class NDS_WordPress_Events_Admin
             4  => __( 'Event updated.' ),
             /* translators: %s: date and time of the revision */
             5  => isset( $_GET['revision'] ) ? sprintf(
-                __( 'Event restored to revision from %s' ),
-                wp_post_revision_title( (int)$_GET['revision'], FALSE )
-            ) : FALSE,
+                    __( 'Event restored to revision from %s' ),
+                    wp_post_revision_title( (int)$_GET['revision'], FALSE )
+                ) : FALSE,
             6  => sprintf( __( 'Event published. <a href="%s">View event</a>' ), esc_url( get_permalink( $post_ID ) ) ),
             7  => __( 'Event saved.' ),
             8  => sprintf(
