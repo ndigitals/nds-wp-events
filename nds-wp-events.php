@@ -41,7 +41,7 @@ if ( !defined( 'NDSWP_EVENTS_PATH' ) )
  */
 if ( !defined( 'NDSWP_EVENTS_URL' ) )
 {
-    define( 'NDSWP_EVENTS_URL', str_replace( array( 'http', 'https' ), '', plugin_dir_url( __FILE__ ) ) );
+    define( 'NDSWP_EVENTS_URL', str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) ) );
 }
 
 require_once( NDSWP_EVENTS_PATH . 'inc/class-nds-wp-events.php' );
