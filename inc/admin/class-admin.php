@@ -116,7 +116,7 @@ class NDS_WordPress_Events_Admin
                 $this->plugin_slug . '-admin-styles',
                 NDSWP_EVENTS_URL . 'assets/css/admin.css',
                 array(),
-                Plugin_Name::VERSION
+                NDS_WP_Events::VERSION
             );
         }
 
@@ -144,7 +144,7 @@ class NDS_WordPress_Events_Admin
                 $this->plugin_slug . '-admin-script',
                 NDSWP_EVENTS_URL . 'assets/js/admin.js',
                 array( 'jquery' ),
-                Plugin_Name::VERSION
+                NDS_WP_Events::VERSION
             );
         }
 
