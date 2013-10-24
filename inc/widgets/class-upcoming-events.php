@@ -23,7 +23,7 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
     {
         parent::__construct(
             'nds_wp_upcoming_events_widget', // Base ID
-            'Events', // Name
+            'Upcoming Events', // Name
             array( 'description' => __( 'Upcoming Events Widget', 'text_domain' ), ) // Args
         );
     }
