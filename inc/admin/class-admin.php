@@ -212,15 +212,16 @@ class NDS_WordPress_Events_Admin
     {
         ?>
         <style type="text/css" media="screen">
-            #menu-posts-daybreak_events .wp-menu-image {
+            #menu-posts-<?php echo $this->plugin_post_type; ?> .wp-menu-image {
                 background: url(<?php echo NDSWP_EVENTS_URL, 'assets/images/calendar-month.png'; ?>) no-repeat 6px -18px !important;
             }
 
-            #menu-posts-daybreak_events:hover .wp-menu-image, #menu-posts-daybreak_events.wp-has-current-submenu .wp-menu-image {
+            #menu-posts-<?php echo $this->plugin_post_type; ?>:hover .wp-menu-image,
+            #menu-posts-<?php echo $this->plugin_post_type; ?>.wp-has-current-submenu .wp-menu-image {
                 background-position: 6px 6px !important;
             }
 
-            #icon-edit.icon32-posts-daybreak_events {
+            #icon-edit.icon32-posts-<?php echo $this->plugin_post_type; ?> {
                 background: url(<?php echo NDSWP_EVENTS_URL, 'assets/images/calendar-month-32x32.png'; ?>) no-repeat;
             }
         </style>
