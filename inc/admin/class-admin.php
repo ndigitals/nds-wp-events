@@ -48,7 +48,6 @@ class NDS_WordPress_Events_Admin
         $plugin                           = NDS_WP_Events::get_instance();
         $this->plugin_slug                = $plugin->get_plugin_slug();
         $this->plugin_post_type           = $plugin->get_plugin_post_type();
-        $this->plugin_custom_field_prefix = $plugin->get_plugin_field_prefix();
 
         // Load admin style sheet and JavaScript.
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
@@ -300,17 +299,17 @@ class NDS_WordPress_Events_Admin
                 }
                 break;
             case 'event_start_date_fmt':
-                $start_date = date( $date_format, $custom[$this->plugin_custom_field_prefix . "_start_date"][0] );
-                $start_time = date( $time_format, $custom[$this->plugin_custom_field_prefix . "_start_date"][0] );
+                $start_date = date( $date_format, $custom[$this->plugin_post_type . "_start_date"][0] );
+                $start_time = date( $time_format, $custom[$this->plugin_post_type . "_start_date"][0] );
                 echo $start_date, '<br /><em>', $start_time . '</em>';
                 break;
             case 'event_end_date_fmt':
-                $end_date = date( $date_format, $custom[$this->plugin_custom_field_prefix . "_end_date"][0] );
-                $end_time = date( $time_format, $custom[$this->plugin_custom_field_prefix . "_end_date"][0] );
+                $end_date = date( $date_format, $custom[$this->plugin_post_type . "_end_date"][0] );
+                $end_time = date( $time_format, $custom[$this->plugin_post_type . "_end_date"][0] );
                 echo $end_date, '<br /><em>', $end_time . '</em>';
                 break;
             case 'event_location_fmt':
-                echo $custom[$this->plugin_custom_field_prefix . "_location"][0];
+                echo $custom[$this->plugin_post_type . "_location"][0];
                 break;
         }
     }
@@ -332,7 +331,7 @@ class NDS_WordPress_Events_Admin
         if ( $wp_the_query === $query && is_admin() && is_post_type_archive( $this->plugin_post_type ) )
         {
             $query->set( 'orderby', 'meta_value_num' );
-            $query->set( 'meta_key', $this->plugin_custom_field_prefix . '_start_date' );
+            $query->set( 'meta_key', $this->plugin_post_type . '_start_date' );
             $query->set( 'order', 'DESC' );
         }
     }
@@ -343,9 +342,9 @@ class NDS_WordPress_Events_Admin
      */
     public function events_column_register_sortable( $columns )
     {
-        $columns['event_category_fmt']   = $this->plugin_custom_field_prefix . '_category';
-        $columns['event_start_date_fmt'] = $this->plugin_custom_field_prefix . '_start_date';
-        $columns['event_end_date_fmt']   = $this->plugin_custom_field_prefix . '_end_date';
+        $columns['event_category_fmt']   = $this->plugin_post_type . '_category';
+        $columns['event_start_date_fmt'] = $this->plugin_post_type . '_start_date';
+        $columns['event_end_date_fmt']   = $this->plugin_post_type . '_end_date';
 
         return $columns;
     }
@@ -364,9 +363,9 @@ class NDS_WordPress_Events_Admin
                 array(
                      'show_option_all' => 'Show All Categories',
                      'taxonomy'        => $this->plugin_post_type . '_category',
-                     'name'            => $this->plugin_custom_field_prefix . '_category',
+                     'name'            => $this->plugin_post_type . '_category',
                      'orderby'         => 'name',
-                     'selected'        => ( isset( $wp_query->query[$this->plugin_custom_field_prefix . '_category'] ) ? $wp_query->query[$this->plugin_custom_field_prefix . '_category'] : '' ),
+                     'selected'        => ( isset( $wp_query->query[$this->plugin_post_type . '_category'] ) ? $wp_query->query[$this->plugin_post_type . '_category'] : '' ),
                      'hierarchical'    => TRUE,
                      'depth'           => 3,
                      'show_count'      => TRUE,
@@ -413,9 +412,9 @@ class NDS_WordPress_Events_Admin
         $time_format = get_option( 'time_format' );
 
         $meta_start_time = $meta_start_date = $this->get_event_field(
-            $this->plugin_custom_field_prefix . '_start_date'
+            $this->plugin_post_type . '_start_date'
         );
-        $meta_end_time   = $meta_end_date = $this->get_event_field( $this->plugin_custom_field_prefix . '_end_date' );
+        $meta_end_time   = $meta_end_date = $this->get_event_field( $this->plugin_post_type . '_end_date' );
 
         // - populate today if empty, 00:00 for time -
         if ( $meta_start_date == NULL || $meta_start_time == '' || strlen( $meta_start_time ) <= 0 )
@@ -432,38 +431,38 @@ class NDS_WordPress_Events_Admin
 
         $css_meta_class = $this->plugin_slug . '-meta';
         ?>
-        <input type="hidden" name="<?php echo $this->plugin_custom_field_prefix ?>_nonce" id="<?php echo $this->plugin_slug ?>-nonce"
+        <input type="hidden" name="<?php echo $this->plugin_post_type ?>_nonce" id="<?php echo $this->plugin_slug ?>-nonce"
                value="<?php echo wp_create_nonce( $this->plugin_slug . '-nonce' ); ?>"/>
         <ul class="<?php echo $css_meta_class ?> clearfix">
             <li class="clearfix">
                 <label>Start
-                    Date: </label><input type="text" name="<?php echo $this->plugin_custom_field_prefix ?>_start_date" class="eventdate"
+                    Date: </label><input type="text" name="<?php echo $this->plugin_post_type ?>_start_date" class="eventdate"
                                          value="<?php echo $meta_start_date_fmt; ?>"/>
                 <label>Start
-                    Time: </label><input type="text" name="<?php echo $this->plugin_custom_field_prefix ?>_start_time"
+                    Time: </label><input type="text" name="<?php echo $this->plugin_post_type ?>_start_time"
                                          value="<?php echo $meta_start_time_fmt; ?>"/>
                 <em>(e.g. <?php echo date( $time_format, 0 ); ?>)</em>
             </li>
             <li class="clearfix">
                 <label>End
-                    Date: </label><input type="text" name="<?php echo $this->plugin_custom_field_prefix ?>_end_date" class="eventdate"
+                    Date: </label><input type="text" name="<?php echo $this->plugin_post_type ?>_end_date" class="eventdate"
                                          value="<?php echo $meta_end_date_fmt; ?>"/>
                 <label>End
-                    Time: </label><input type="text" name="<?php echo $this->plugin_custom_field_prefix ?>_end_time"
+                    Time: </label><input type="text" name="<?php echo $this->plugin_post_type ?>_end_time"
                                          value="<?php echo $meta_end_time_fmt; ?>"/> <em>(e.g. <?php echo date(
                         $time_format,
                         0
                     ); ?>)</em>
             </li>
             <li class="clearfix">
-                <label>Location: </label><input type="text" size="70" name="<?php echo $this->plugin_custom_field_prefix ?>_location"
+                <label>Location: </label><input type="text" size="70" name="<?php echo $this->plugin_post_type ?>_location"
                                                 value="<?php echo $this->get_event_field(
-                                                    $this->plugin_custom_field_prefix . '_location'
+                                                    $this->plugin_post_type . '_location'
                                                 ); ?>"/></li>
             <li class="clearfix">
-                <label>URL: </label><input type="text" size="70" name="<?php echo $this->plugin_custom_field_prefix ?>_url"
+                <label>URL: </label><input type="text" size="70" name="<?php echo $this->plugin_post_type ?>_url"
                                            value="<?php echo $this->get_event_field(
-                                               $this->plugin_custom_field_prefix . '_url'
+                                               $this->plugin_post_type . '_url'
                                            ); ?>"/> <em>(optional)</em></li>
         </ul>
         <style type="text/css">
@@ -528,7 +527,7 @@ class NDS_WordPress_Events_Admin
 
         // - still require nonce
         if ( !wp_verify_nonce(
-            $_POST[$this->plugin_custom_field_prefix . '_nonce'],
+            $_POST[$this->plugin_post_type . '_nonce'],
             $this->plugin_slug . '-nonce'
         )
         )
@@ -542,47 +541,47 @@ class NDS_WordPress_Events_Admin
         }
 
         // - convert back to unix & update post
-        if ( !isset( $_POST[$this->plugin_custom_field_prefix . '_start_date'] ) )
+        if ( !isset( $_POST[$this->plugin_post_type . '_start_date'] ) )
         {
             return $post;
         }
         $updatestartd = strtotime(
-            $_POST[$this->plugin_custom_field_prefix . '_start_date'] . $_POST[$this->plugin_custom_field_prefix . '_start_time']
+            $_POST[$this->plugin_post_type . '_start_date'] . $_POST[$this->plugin_post_type . '_start_time']
         );
         update_post_meta(
             $post->ID,
-            $this->plugin_custom_field_prefix . '_start_date',
+            $this->plugin_post_type . '_start_date',
             sanitize_text_field( $updatestartd )
         );
 
-        if ( !isset( $_POST[$this->plugin_custom_field_prefix . '_end_date'] ) )
+        if ( !isset( $_POST[$this->plugin_post_type . '_end_date'] ) )
         {
             return $post;
         }
         $updateendd = strtotime(
-            $_POST[$this->plugin_custom_field_prefix . '_end_date'] . $_POST[$this->plugin_custom_field_prefix . '_end_time']
+            $_POST[$this->plugin_post_type . '_end_date'] . $_POST[$this->plugin_post_type . '_end_time']
         );
         update_post_meta(
             $post->ID,
-            $this->plugin_custom_field_prefix . '_end_date',
+            $this->plugin_post_type . '_end_date',
             sanitize_text_field( $updateendd )
         );
 
-        if ( isset( $_POST[$this->plugin_custom_field_prefix . '_location'] ) )
+        if ( isset( $_POST[$this->plugin_post_type . '_location'] ) )
         {
             update_post_meta(
                 $post->ID,
-                $this->plugin_custom_field_prefix . '_location',
-                sanitize_text_field( $_POST[$this->plugin_custom_field_prefix . '_location'] )
+                $this->plugin_post_type . '_location',
+                sanitize_text_field( $_POST[$this->plugin_post_type . '_location'] )
             );
         }
 
-        if ( isset( $_POST[$this->plugin_custom_field_prefix . '_url'] ) )
+        if ( isset( $_POST[$this->plugin_post_type . '_url'] ) )
         {
             update_post_meta(
                 $post->ID,
-                $this->plugin_custom_field_prefix . '_url',
-                sanitize_text_field( $_POST[$this->plugin_custom_field_prefix . '_url'] )
+                $this->plugin_post_type . '_url',
+                sanitize_text_field( $_POST[$this->plugin_post_type . '_url'] )
             );
         }
     }

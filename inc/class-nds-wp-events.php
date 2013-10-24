@@ -51,16 +51,7 @@ class NDS_WP_Events
      *
      * @var     string
      */
-    protected $plugin_post_type = 'nds_wp_events';
-
-    /**
-     * Unique prefix for custom meta fields
-     *
-     * @since   1.0.0
-     *
-     * @var     string
-     */
-    protected $plugin_custom_field_prefix = 'nds_wp_event';
+    protected $plugin_post_type = 'nds_wp_event';
 
     /**
      * Instance of this class.
@@ -124,18 +115,6 @@ class NDS_WP_Events
     public function get_plugin_post_type()
     {
         return $this->plugin_post_type;
-    }
-
-    /**
-     * Return the plugin custom meta field prefix.
-     *
-     * @since   1.0.0
-     *
-     * @return  string      Plugin custom meta field variable.
-     */
-    public function get_plugin_field_prefix()
-    {
-        return $this->plugin_custom_field_prefix;
     }
 
     /**
@@ -500,14 +479,14 @@ class NDS_WP_Events
         {
             $meta_query = array(
                 array(
-                    'key'     => $this->plugin_custom_field_prefix . '_end_date',
+                    'key'     => $this->plugin_post_type . '_end_date',
                     'value'   => $current_time,
                     'compare' => '>'
                 )
             );
             $query->set( 'meta_query', $meta_query );
             $query->set( 'orderby', 'meta_value_num' );
-            $query->set( 'meta_key', $this->plugin_custom_field_prefix . '_start_date' );
+            $query->set( 'meta_key', $this->plugin_post_type . '_start_date' );
             $query->set( 'order', 'ASC' );
         }
 
