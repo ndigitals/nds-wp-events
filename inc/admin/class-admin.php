@@ -465,7 +465,7 @@ class NDS_WordPress_Events_Admin
         </ul>
         <style type="text/css">
             .<?php echo $css_meta_class; ?> {
-                margin: 0 0 24px;
+                margin: 0;
             }
 
             .<?php echo $css_meta_class; ?> li {
