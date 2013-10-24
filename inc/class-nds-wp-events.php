@@ -12,7 +12,7 @@
 /**
  * Include Events widget class.
  */
-require( NDSWP_EVENTS_PATH . '/inc/widgets/class-upcoming-events.php' );
+require_once( NDSWP_EVENTS_PATH . 'inc/widgets/class-upcoming-events.php' );
 
 /**
  * Plugin class.
@@ -516,7 +516,7 @@ class NDS_WP_Events
      */
     public function events_widgets_register()
     {
-        register_widget( 'NDS_WordPress_Upcoming_Events_Widget' );
+        register_widget( 'NDS_WP_Upcoming_Events_Widget' );
     }
 
 }

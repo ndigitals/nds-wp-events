@@ -11,9 +11,9 @@
 
 
 /**
- * Adds NDS_WordPress_Upcoming_Events_Widget widget.
+ * Adds NDS_WP_Upcoming_Events_Widget widget.
  */
-class NDS_WordPress_Upcoming_Events_Widget extends WP_Widget
+class NDS_WP_Upcoming_Events_Widget extends WP_Widget
 {
 
     /**
@@ -94,4 +94,4 @@ class NDS_WordPress_Upcoming_Events_Widget extends WP_Widget
         return $instance;
     }
 
-} // class NDS_WordPress_Upcoming_Events_Widget
+} // class NDS_WP_Upcoming_Events_Widget
