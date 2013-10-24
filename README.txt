@@ -8,11 +8,11 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A simple events management plugin that uses a custom post type. Includes and upcoming events widget.
+A simple events management plugin that uses a custom post type and includes an upcoming events widget.
 
 == Description ==
 
-A simple events management plugin that uses a custom post type. Includes and upcoming events widget.
+A simple events management plugin that uses a custom post type and includes an upcoming events widget. This plugin is primarily intended to provide theme developers pre-built events management that can then be styled and presented to match the theme.
 
 == Installation ==
 
