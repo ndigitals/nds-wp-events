@@ -285,7 +285,7 @@ class NDS_WP_Events
      *
      * @since    1.0.0
      */
-    public function enqueue_styles()
+    /*public function enqueue_styles()
     {
         wp_enqueue_style(
             $this->plugin_slug . '-plugin-styles',
@@ -293,14 +293,14 @@ class NDS_WP_Events
             array(),
             self::VERSION
         );
-    }
+    }*/
 
     /**
      * Register and enqueues public-facing JavaScript files.
      *
      * @since    1.0.0
      */
-    public function enqueue_scripts()
+    /*public function enqueue_scripts()
     {
         wp_enqueue_script(
             $this->plugin_slug . '-plugin-script',
@@ -308,7 +308,7 @@ class NDS_WP_Events
             array( 'jquery' ),
             self::VERSION
         );
-    }
+    }*/
 
     /**
      * NOTE:  Actions are points in the execution of a page or process
