@@ -13,7 +13,7 @@
  *            Version:     1.0.0
  *            Author:      Tim Nolte
  *            Author URI:  http://www.ndigitals.com/
- *            Text Domain: plugin-name-locale
+ *            Text Domain: nds-wp-events-locale
  *            License:     GPL-2.0+
  *            License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *            Domain Path: /languages
@@ -35,8 +35,15 @@ if ( !defined( 'NDSWP_EVENTS_PATH' ) )
 }
 
 /**
+ * Define a plugin directory global so we don't have to call functions
+ */
+if ( !defined( 'NDSWP_EVENTS_DIR' ) )
+{
+    define( 'NDSWP_EVENTS_DIR', basename( NDSWP_EVENTS_PATH ) );
+}
+
+/**
  * Define a plugin URL global so we don't have to call the function
- *
  * NOTE: Protocol stripped in order to provide an agnostic URL reference
  */
 if ( !defined( 'NDSWP_EVENTS_URL' ) )

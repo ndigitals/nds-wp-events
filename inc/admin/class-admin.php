@@ -12,8 +12,8 @@
 /**
  * Plugin Admin class.
  *
- * @package NDS_WordPress_Events_Admin
- * @author  Tim Nolte <tim.nolte@ndigitals.com>
+ * @package   NDS_WordPress_Events_Admin
+ * @author    Tim Nolte <tim.nolte@ndigitals.com>
  */
 class NDS_WordPress_Events_Admin
 {
@@ -209,14 +209,15 @@ class NDS_WordPress_Events_Admin
      */
     public function events_icons()
     {
+        $menu_post_type_class = '#menu-posts-' + $this->plugin_post_type;
         ?>
         <style type="text/css" media="screen">
-            #menu-posts-<?php echo $this->plugin_post_type; ?> .wp-menu-image {
+            <?php echo $menu_post_type_class; ?> .wp-menu-image {
                 background: url(<?php echo NDSWP_EVENTS_URL, 'assets/images/calendar-month.png'; ?>) no-repeat 6px -18px !important;
             }
 
-            #menu-posts-<?php echo $this->plugin_post_type; ?>:hover .wp-menu-image,
-            #menu-posts-<?php echo $this->plugin_post_type; ?>.wp-has-current-submenu .wp-menu-image {
+            <?php echo $menu_post_type_class; ?>:hover .wp-menu-image,
+            <?php echo $menu_post_type_class; ?>.wp-has-current-submenu .wp-menu-image {
                 background-position: 6px 6px !important;
             }
 
