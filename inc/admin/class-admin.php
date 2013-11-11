@@ -209,7 +209,7 @@ class NDS_WordPress_Events_Admin
      */
     public function events_icons()
     {
-        $menu_post_type_class = '#menu-posts-' + $this->plugin_post_type;
+        $menu_post_type_class = '#menu-posts-' . $this->plugin_post_type;
         ?>
         <style type="text/css" media="screen">
             <?php echo $menu_post_type_class; ?> .wp-menu-image {
