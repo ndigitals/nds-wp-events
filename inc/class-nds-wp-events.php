@@ -81,15 +81,15 @@ class NDS_WP_Events
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
         // Define custom functionality. Read more about actions and filters: http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
-        add_action( 'init', array( $this, 'events_register' ) );
-        add_action( 'init', array( $this, 'events_category_taxonomy' ), 0 );
-        add_action( 'init', array( $this, 'events_tag_taxonomy' ), 0 );
-        add_action( 'pre_get_posts', array( $this, 'events_query' ) );
+        add_action( 'init', array( $this, 'register_events_post_type' ) );
+        add_action( 'init', array( $this, 'register_category_taxonomy' ), 0 );
+        add_action( 'init', array( $this, 'register_tag_taxonomy' ), 0 );
+        add_action( 'pre_get_posts', array( $this, 'frontend_listing_query' ) );
         if ( function_exists( 'register_sidebar' ) )
         {
-            add_action( 'widgets_init', array( $this, 'events_widget_areas_init' ) );
+            add_action( 'widgets_init', array( $this, 'widget_areas_init' ) );
         }
-        add_action( 'widgets_init', array( $this, 'events_widgets_register' ) );
+        add_action( 'widgets_init', array( $this, 'register_events_widgets' ) );
 
     }
 
@@ -311,37 +311,9 @@ class NDS_WP_Events
     }
 
     /**
-     * NOTE:  Actions are points in the execution of a page or process
-     *        lifecycle that WordPress fires.
-     *
-     *        WordPress Actions: http://codex.wordpress.org/Plugin_API#Actions
-     *        Action Reference:  http://codex.wordpress.org/Plugin_API/Action_Reference
-     *
-     * @since    1.0.0
-     */
-    public function action_method_name()
-    {
-        // TODO: Define your action hook callback here
-    }
-
-    /**
-     * NOTE:  Filters are points of execution in which WordPress modifies data
-     *        before saving it or sending it to the browser.
-     *
-     *        WordPress Filters: http://codex.wordpress.org/Plugin_API#Filters
-     *        Filter Reference:  http://codex.wordpress.org/Plugin_API/Filter_Reference
-     *
-     * @since    1.0.0
-     */
-    public function filter_method_name()
-    {
-        // TODO: Define your filter hook callback here
-    }
-
-    /**
      * Create an Event Post Type
      */
-    public function events_register()
+    public function register_events_post_type()
     {
 
         $labels = array(
@@ -374,7 +346,10 @@ class NDS_WP_Events
             'menu_icon'          => NULL,
             'has_archive'        => TRUE,
             'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
-            'taxonomies'         => array( $this->plugin_post_type . '_category', $this->plugin_post_type . '_tag' )
+            'taxonomies'         => array(
+                $this->plugin_post_type . '_category',
+                $this->plugin_post_type . '_tag'
+            )
         );
 
         register_post_type( $this->plugin_post_type, $args );
@@ -384,7 +359,7 @@ class NDS_WP_Events
     /**
      * Setup custom category for Events.
      */
-    public function events_category_taxonomy()
+    public function register_category_taxonomy()
     {
 
         $labels = array(
@@ -424,7 +399,7 @@ class NDS_WP_Events
     /**
      * Setup custom tags for Events.
      */
-    public function events_tag_taxonomy()
+    public function register_tag_taxonomy()
     {
 
         $labels = array(
@@ -467,7 +442,7 @@ class NDS_WP_Events
      *
      * @param object $query data
      */
-    public function events_query( $query )
+    public function frontend_listing_query( $query )
     {
         // http://codex.wordpress.org/Function_Reference/current_time
         $current_time = current_time( 'timestamp' );
@@ -496,7 +471,7 @@ class NDS_WP_Events
     /**
      * Register site widget sidebars
      */
-    public function events_widget_areas_init()
+    public function widget_areas_init()
     {
         register_sidebar(
             array(
@@ -514,7 +489,7 @@ class NDS_WP_Events
     /**
      * Register a Events widget.
      */
-    public function events_widgets_register()
+    public function register_events_widgets()
     {
         register_widget( 'NDS_WP_Upcoming_Events_Widget' );
     }

@@ -61,16 +61,16 @@ class NDS_WordPress_Events_Admin
         add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
 
         // Define custom functionality. Read more about actions and filters: http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
-        add_action( 'admin_head', array( $this, 'events_icons' ) );
-        add_filter( 'manage_nds_wp_events_posts_columns', array( $this, 'events_edit_columns' ) );
-        add_action( 'manage_posts_custom_column', array( $this, 'events_custom_columns' ) );
-        add_action( 'pre_get_posts', array( $this, 'events_query' ) );
-        add_filter( 'manage_edit-nds_wp_events_sortable_columns', array( $this, 'events_column_register_sortable' ) );
-        add_action( 'restrict_manage_posts', array( $this, 'events_category_filter_list' ) );
+        add_action( 'admin_head', array( $this, 'icons_styles' ) );
+        add_filter( 'manage_nds_wp_events_posts_columns', array( $this, 'edit_columns' ) );
+        add_action( 'manage_posts_custom_column', array( $this, 'custom_columns' ) );
+        add_action( 'pre_get_posts', array( $this, 'manage_listing_query' ) );
+        add_filter( 'manage_edit-nds_wp_events_sortable_columns', array( $this, 'column_register_sortable' ) );
+        add_action( 'restrict_manage_posts', array( $this, 'category_filter_list' ) );
         add_filter( 'parse_query', array( $this, 'events_filtering' ) );
         add_action( 'admin_init', array( $this, 'events_admin_init' ) );
         add_action( 'save_post', array( $this, 'save_event' ) );
-        add_filter( 'post_updated_messages', array( $this, 'event_updated_messages' ) );
+        add_filter( 'post_updated_messages', array( $this, 'update_messages' ) );
 
     }
 
@@ -206,8 +206,10 @@ class NDS_WordPress_Events_Admin
 
     /**
      * Define icon styles for the Events custom post type
+     *
+     * @since    1.0.0
      */
-    public function events_icons()
+    public function icons_styles()
     {
         $menu_post_type_class = '#menu-posts-' . $this->plugin_post_type;
         ?>
@@ -225,15 +227,16 @@ class NDS_WordPress_Events_Admin
                 background: url(<?php echo NDSWP_EVENTS_URL, 'assets/images/calendar-month-32x32.png'; ?>) no-repeat;
             }
         </style>
-
     <?php
     }
 
 
     /**
      * Setup Admin Event Listing Headers
+     *
+     * @since    1.0.0
      */
-    public function events_edit_columns( $columns )
+    public function edit_columns( $columns )
     {
         $columns = array(
             'cb'                   => '<input type="checkbox" />',
@@ -251,8 +254,10 @@ class NDS_WordPress_Events_Admin
 
     /**
      * Setup Admin Event Listing Item Formats
+     *
+     * @since    1.0.0
      */
-    public function events_custom_columns( $column )
+    public function custom_columns( $column )
     {
         global $post;
         $custom = get_post_custom();
@@ -319,9 +324,11 @@ class NDS_WordPress_Events_Admin
     /**
      * Customize the admin Events Query using Post Meta
      *
+     * @since    1.0.0
+     *
      * @param object $query data
      */
-    public function events_query( $query )
+    public function manage_listing_query( $query )
     {
         // http://codex.wordpress.org/Function_Reference/current_time
         $current_time = current_time( 'timestamp' );
@@ -340,8 +347,14 @@ class NDS_WordPress_Events_Admin
 
     /**
      * Setup which columns are sortable.
+     *
+     * @since    1.0.0
+     *
+     * @param array $columns
+     *
+     * @return array
      */
-    public function events_column_register_sortable( $columns )
+    public function column_register_sortable( $columns )
     {
         $columns['event_category_fmt']   = $this->plugin_post_type . '_category';
         $columns['event_start_date_fmt'] = $this->plugin_post_type . '_start_date';
@@ -353,8 +366,10 @@ class NDS_WordPress_Events_Admin
 
     /**
      * Setup an events category filtering list.
+     *
+     * @since    1.0.0
      */
-    public function events_category_filter_list()
+    public function category_filter_list()
     {
         $screen = get_current_screen();
         global $wp_query;
@@ -379,6 +394,8 @@ class NDS_WordPress_Events_Admin
 
     /**
      * Setup custom filtering for events.
+     *
+     * @since    1.0.0
      */
     public function events_filtering( $query )
     {
@@ -398,8 +415,10 @@ class NDS_WordPress_Events_Admin
 
     /**
      * Setup the custom Event details meta box
+     *
+     * @since    1.0.0
      */
-    public function event_details_meta()
+    public function post_type_metabox()
     {
         // We need the jQuery UI Datepicker
         wp_enqueue_script( 'jquery-ui-datepicker' );
@@ -510,7 +529,7 @@ class NDS_WordPress_Events_Admin
         add_meta_box(
             'event_meta',
             'Event Details',
-            array( $this, 'event_details_meta' ),
+            array( $this, 'post_type_metabox' ),
             $this->plugin_post_type,
             'normal',
             'high'
@@ -519,6 +538,8 @@ class NDS_WordPress_Events_Admin
 
     /**
      * Save Event meta box data.
+     *
+     * @since    1.0.0
      */
     function save_event()
     {
@@ -588,8 +609,14 @@ class NDS_WordPress_Events_Admin
 
     /**
      * Setup nice admin ui messages.
+     *
+     * @since    1.0.0
+     *
+     * @param array $messages
+     *
+     * @return array
      */
-    public function event_updated_messages( $messages )
+    public function update_messages( $messages )
     {
         global $post, $post_ID;
 
@@ -629,6 +656,8 @@ class NDS_WordPress_Events_Admin
     /**
      * Event field helper method.
      *
+     * @since    1.0.0
+     *
      * @param string $event_field
      */
     private function get_event_field( $event_field )
@@ -647,6 +676,12 @@ class NDS_WordPress_Events_Admin
 
     /**
      * PHP date() format to jQueryUI Datepicker format
+     *
+     * @since    1.0.0
+     *
+     * @param string $php_format
+     *
+     * @return string
      */
     private function php_to_datepicker_format( $php_format )
     {
