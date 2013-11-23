@@ -23,8 +23,14 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
      */
     function __construct()
     {
+
+        // Call $plugin_slug from initial plugin class.
+        $plugin                 = NDS_WP_Events::get_instance();
+        $this->plugin_slug      = $plugin->get_plugin_slug();
+        $this->plugin_post_type = $plugin->get_plugin_post_type();
+
         parent::__construct(
-            'nds_wp_upcoming_events_widget', // Base ID
+              $this->plugin_post_type . '_upcoming_events_widget', // Base ID
             'Upcoming Events', // Name
             array( 'description' => __( 'Upcoming Events Widget', 'text_domain' ), ) // Args
         );
