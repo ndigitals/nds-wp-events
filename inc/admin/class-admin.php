@@ -212,20 +212,24 @@ class NDS_WordPress_Events_Admin
     public function icons_styles()
     {
         $menu_post_type_class = '#menu-posts-' . $this->plugin_post_type;
-        ?>
-        <style type="text/css" media="screen">
-            <?php echo $menu_post_type_class; ?> .wp-menu-image {
-                background: url(<?php echo NDSWP_EVENTS_URL, 'assets/images/calendar-month.png'; ?>) no-repeat 6px -18px !important;
+        $menu_icon            = NDSWP_EVENTS_URL . 'assets/images/calendar-month.png';
+        $page_icon            = NDSWP_EVENTS_URL . 'assets/images/calendar-month-32x32.png';        ?>
+        <style type="text/css" media="screen"><?php
+echo <<<CSS
+            {$menu_post_type_class} .wp-menu-image {
+                background: url({$menu_icon}) no-repeat 6px -18px !important;
             }
 
-            <?php echo $menu_post_type_class; ?>:hover .wp-menu-image,
-            <?php echo $menu_post_type_class; ?>.wp-has-current-submenu .wp-menu-image {
+            {$menu_post_type_class}:hover .wp-menu-image,
+            {$menu_post_type_class}.wp-has-current-submenu .wp-menu-image {
                 background-position: 6px 6px !important;
             }
 
-            #icon-edit.icon32-posts-<?php echo $this->plugin_post_type; ?> {
-                background: url(<?php echo NDSWP_EVENTS_URL, 'assets/images/calendar-month-32x32.png'; ?>) no-repeat;
+            #icon-edit.icon32-posts-{$this->plugin_post_type} {
+                background: url({$page_icon}) no-repeat;
             }
+CSS;
+?>
         </style>
     <?php
     }
@@ -483,35 +487,38 @@ class NDS_WordPress_Events_Admin
                                                                   $this->plugin_post_type . '_url'
                                            ); ?>"/> <em>(optional)</em></li>
         </ul>
-        <style type="text/css">
-            .<?php echo $css_meta_class; ?> {
+        <style type="text/css"><?php
+echo <<<CSS
+            .{$css_meta_class} {
                 margin: 0;
             }
 
-            .<?php echo $css_meta_class; ?> li {
+            .{$css_meta_class} li {
                 clear: left;
                 vertical-align: middle;
             }
 
-            .<?php echo $css_meta_class; ?> label,
-            .<?php echo $css_meta_class; ?> input,
-            .<?php echo $css_meta_class; ?> em {
+            .{$css_meta_class} label,
+            .{$css_meta_class} input,
+            .{$css_meta_class} em {
                 float: left;
             }
 
-            .<?php echo $css_meta_class; ?> label,
-            .<?php echo $css_meta_class; ?> em {
+            .{$css_meta_class} label,
+            .{$css_meta_class} em {
                 width: 100px;
                 padding: 5px 0 0 0;
             }
 
-            .<?php echo $css_meta_class; ?> input {
+            .{$css_meta_class} input {
                 margin-right: 4px;
             }
 
-            .<?php echo $css_meta_class; ?> em {
+            .{$css_meta_class} em {
                 color: gray;
             }
+CSS;
+?>
         </style>
         <script type="text/javascript">
             jQuery(document).ready(function ($) {
