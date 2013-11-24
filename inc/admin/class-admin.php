@@ -62,10 +62,10 @@ class NDS_WordPress_Events_Admin
 
         // Define custom functionality. Read more about actions and filters: http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
         add_action( 'admin_head', array( $this, 'icons_styles' ) );
-        add_filter( 'manage_nds_wp_events_posts_columns', array( $this, 'edit_columns' ) );
+        add_filter( 'manage_' . $this->plugin_post_type . '_posts_columns', array( $this, 'edit_columns' ) );
         add_action( 'manage_posts_custom_column', array( $this, 'custom_columns' ) );
         add_action( 'pre_get_posts', array( $this, 'manage_listing_query' ) );
-        add_filter( 'manage_edit-nds_wp_events_sortable_columns', array( $this, 'column_register_sortable' ) );
+        add_filter( 'manage_edit-' . $this->plugin_post_type . '_sortable_columns', array( $this, 'column_register_sortable' ) );
         add_action( 'restrict_manage_posts', array( $this, 'category_filter_list' ) );
         add_filter( 'parse_query', array( $this, 'events_filtering' ) );
         add_action( 'admin_init', array( $this, 'events_admin_init' ) );
@@ -243,13 +243,13 @@ CSS;
     public function edit_columns( $columns )
     {
         $columns = array(
-            'cb'                   => '<input type="checkbox" />',
-            'title'                => 'Event',
-            'event_category_fmt'   => 'Category',
-            'event_tags_fmt'       => 'Tags',
-            'event_location_fmt'   => 'Location',
-            'event_start_date_fmt' => 'Start Date/Time',
-            'event_end_date_fmt'   => 'End Date/Time'
+            'cb'                                        => '<input type="checkbox" />',
+            'title'                                     => 'Event',
+            $this->plugin_post_type . '_category_fmt'   => 'Category',
+            $this->plugin_post_type . '_tags_fmt'       => 'Tags',
+            $this->plugin_post_type . '_location_fmt'   => 'Location',
+            $this->plugin_post_type . '_start_date_fmt' => 'Start Date/Time',
+            $this->plugin_post_type . '_end_date_fmt'   => 'End Date/Time'
         );
 
         return $columns;
@@ -271,7 +271,7 @@ CSS;
 
         switch ( $column )
         {
-            case 'event_category_fmt':
+            case $this->plugin_post_type . '_category_fmt':
                 // - show taxonomy terms -
                 $event_categories      = get_the_terms( $post->ID, $this->plugin_post_type . '_category' );
                 $event_categories_html = array();
@@ -288,7 +288,7 @@ CSS;
                     _e( 'None' );
                 }
                 break;
-            case 'event_tags_fmt':
+            case $this->plugin_post_type . '_tags_fmt':
                 // - show taxonomy terms -
                 $event_tags      = get_the_terms( $post->ID, $this->plugin_post_type . '_tag' );
                 $event_tags_html = array();
@@ -308,17 +308,17 @@ CSS;
                     _e( 'None' );
                 }
                 break;
-            case 'event_start_date_fmt':
+            case $this->plugin_post_type . '_start_date_fmt':
                 $start_date = date( $date_format, $custom[$this->plugin_post_type . "_start_date"][0] );
                 $start_time = date( $time_format, $custom[$this->plugin_post_type . "_start_date"][0] );
                 echo $start_date, '<br /><em>', $start_time . '</em>';
                 break;
-            case 'event_end_date_fmt':
+            case $this->plugin_post_type . '_end_date_fmt':
                 $end_date = date( $date_format, $custom[$this->plugin_post_type . "_end_date"][0] );
                 $end_time = date( $time_format, $custom[$this->plugin_post_type . "_end_date"][0] );
                 echo $end_date, '<br /><em>', $end_time . '</em>';
                 break;
-            case 'event_location_fmt':
+            case $this->plugin_post_type . '_location_fmt':
                 echo $custom[$this->plugin_post_type . "_location"][0];
                 break;
         }
@@ -360,9 +360,9 @@ CSS;
      */
     public function column_register_sortable( $columns )
     {
-        $columns['event_category_fmt']   = $this->plugin_post_type . '_category';
-        $columns['event_start_date_fmt'] = $this->plugin_post_type . '_start_date';
-        $columns['event_end_date_fmt']   = $this->plugin_post_type . '_end_date';
+        $columns[$this->plugin_post_type . '_category_fmt']   = $this->plugin_post_type . '_category';
+        $columns[$this->plugin_post_type . '_start_date_fmt'] = $this->plugin_post_type . '_start_date';
+        $columns[$this->plugin_post_type . '_end_date_fmt']   = $this->plugin_post_type . '_end_date';
 
         return $columns;
     }
