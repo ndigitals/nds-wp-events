@@ -405,14 +405,14 @@ CSS;
     {
         $query_vars = & $query->query_vars;
 
-        if ( ( $query_vars['daybreak_event_category'] ) && is_numeric( $query_vars['daybreak_event_category'] ) )
+        if ( ( $query_vars[$this->plugin_post_type . '_category'] ) && is_numeric( $query_vars[$this->plugin_post_type . '_category'] ) )
         {
             $term                                  = get_term_by(
                 'id',
-                $query_vars['daybreak_event_category'],
-                'daybreak_event_category'
+                $query_vars[$this->plugin_post_type . '_category'],
+                $this->plugin_post_type . '_category'
             );
-            $query_vars['daybreak_event_category'] = $term->slug;
+            $query_vars[$this->plugin_post_type . '_category'] = $term->slug;
         }
     }
 
