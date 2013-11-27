@@ -65,7 +65,10 @@ class NDS_WordPress_Events_Admin
         add_filter( 'manage_' . $this->plugin_post_type . '_posts_columns', array( $this, 'edit_columns' ) );
         add_action( 'manage_posts_custom_column', array( $this, 'custom_columns' ) );
         add_action( 'pre_get_posts', array( $this, 'manage_listing_query' ) );
-        add_filter( 'manage_edit-' . $this->plugin_post_type . '_sortable_columns', array( $this, 'column_register_sortable' ) );
+        add_filter(
+            'manage_edit-' . $this->plugin_post_type . '_sortable_columns',
+            array( $this, 'column_register_sortable' )
+        );
         add_action( 'restrict_manage_posts', array( $this, 'category_filter_list' ) );
         add_filter( 'parse_query', array( $this, 'events_filtering' ) );
         add_action( 'admin_init', array( $this, 'events_admin_init' ) );
@@ -405,9 +408,12 @@ CSS;
     {
         $query_vars = & $query->query_vars;
 
-        if ( ( $query_vars[$this->plugin_post_type . '_category'] ) && is_numeric( $query_vars[$this->plugin_post_type . '_category'] ) )
+        if ( isset( $query_vars[$this->plugin_post_type . '_category'] ) && is_numeric(
+                $query_vars[$this->plugin_post_type . '_category']
+            )
+        )
         {
-            $term                                  = get_term_by(
+            $term                                              = get_term_by(
                 'id',
                 $query_vars[$this->plugin_post_type . '_category'],
                 $this->plugin_post_type . '_category'
