@@ -61,10 +61,9 @@ class NDS_WordPress_Events_Admin
         add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
 
         // Define custom functionality. Read more about actions and filters: http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
-        ChromePhp::log(get_user_option( 'admin_color' ));
         if ( 'mp6' !== get_user_option( 'admin_color' ) )
         {
-            add_action( 'admin_head', array( $this, 'icons_styles' ) );
+            //add_action( 'admin_head', array( $this, 'icons_styles' ) );
         }
         add_filter( 'manage_' . $this->plugin_post_type . '_posts_columns', array( $this, 'edit_columns' ) );
         add_action( 'manage_posts_custom_column', array( $this, 'custom_columns' ) );

@@ -343,7 +343,7 @@ class NDS_WP_Events
             'capability_type'    => 'post',
             'hierarchical'       => FALSE,
             'menu_position'      => NULL,
-            'menu_icon'          => ( 'mp6' === get_user_option( 'admin_color' ) ) ? 'dashicons-calendar' : NULL,
+            'menu_icon'          => 'dashicons-calendar',
             'has_archive'        => TRUE,
             'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
             'taxonomies'         => array(
