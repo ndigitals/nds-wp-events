@@ -316,6 +316,8 @@ class NDS_WP_Events
     public function register_events_post_type()
     {
 
+        global $wp_version;
+
         $labels = array(
             'name'               => _x( 'Events', 'post type general name' ),
             'singular_name'      => _x( 'Event', 'post type singular name' ),
@@ -343,7 +345,7 @@ class NDS_WP_Events
             'capability_type'    => 'post',
             'hierarchical'       => FALSE,
             'menu_position'      => NULL,
-            'menu_icon'          => 'dashicons-calendar',
+            'menu_icon'          => ( ( defined( 'MP6' ) && MP6 ) || version_compare( $wp_version, '3.8', '>=' ) ) ? 'dashicons-calendar' : NULL,
             'has_archive'        => TRUE,
             'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
             'taxonomies'         => array(
