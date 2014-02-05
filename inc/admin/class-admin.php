@@ -571,7 +571,7 @@ CSS;
 
         // - still require nonce
         $post_type_nonce = $this->plugin_post_type . '_nonce';
-        if ( !wp_verify_nonce( $post->$post_type_nonce, $this->plugin_slug . '-nonce' ) )
+        if ( !wp_verify_nonce( $_POST[$post_type_nonce], $this->plugin_slug . '-nonce' ) )
         {
             return $post->ID;
         }
