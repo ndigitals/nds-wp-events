@@ -335,6 +335,7 @@ class NDS_WP_Events
         );
 
         $args = array(
+            'label'              => __( 'Event' ),
             'labels'             => $labels,
             'public'             => TRUE,
             'publicly_queryable' => TRUE,
