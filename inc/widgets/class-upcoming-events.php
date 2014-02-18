@@ -25,15 +25,16 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
     {
 
         // Call $plugin_slug from initial plugin class.
-        $plugin                 = NDS_WP_Events::get_instance();
-        $this->plugin_slug      = $plugin->get_plugin_slug();
-        $this->plugin_post_type = $plugin->get_plugin_post_type();
+        $this->plugin           = NDS_WP_Events::get_instance();
+        $this->plugin_slug      = $this->plugin->get_plugin_slug();
+        $this->plugin_post_type = $this->plugin->get_plugin_post_type();
 
         parent::__construct(
               $this->plugin_post_type . '_upcoming_events_widget', // Base ID
-            'Upcoming Events', // Name
-            array( 'description' => __( 'Upcoming Events Widget', 'text_domain' ), ) // Args
+                  'Upcoming Events', // Name
+                  array( 'description' => __( 'Upcoming Events Widget', 'text_domain' ), ) // Args
         );
+
     }
 
     /**
