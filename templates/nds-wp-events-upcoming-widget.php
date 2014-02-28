@@ -6,10 +6,6 @@
  * Time: 10:52 PM
  */
 
-if (class_exists( 'ChromePhp' )) {
-    ChromePhp::log( $post );
-}
-
 $plugin = NDS_WP_Events::get_instance();
 $plugin_post_type = $plugin->get_plugin_post_type();
 
