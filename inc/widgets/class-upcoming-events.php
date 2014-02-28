@@ -59,7 +59,7 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
      */
     public function widget( $args, $instance )
     {
-        global $post, $post_count;
+        global $post;
 
         $args['post_count'] = 4; // TODO: Setup widget admin to allow users to specify this.
 
@@ -75,7 +75,7 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
 
         if ( $events->have_posts() )
         {
-            $post_count = $events->post_count;
+            /*$post_count = $events->post_count;*/
             while ( $events->have_posts() ) : $events->the_post();
                 if ( $overridden_template = locate_template( $this->widget_template ) ) {
                     // locate_template() returns path to file
