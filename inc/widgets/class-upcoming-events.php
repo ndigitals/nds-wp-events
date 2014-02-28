@@ -75,7 +75,7 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
 
         if ( $events->have_posts() )
         {
-            /*$post_count = $events->post_count;*/
+            echo '<ul>';
             while ( $events->have_posts() ) : $events->the_post();
                 if ( $overridden_template = locate_template( $this->widget_template ) ) {
                     // locate_template() returns path to file
@@ -87,12 +87,13 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
                     load_template( NDSWP_EVENTS_PATH . 'templates/' . $this->widget_template );
                 }
             endwhile;
+            echo '</ul>';
         }
+
+        echo $args['after_widget'];
 
         // Reset Post Data
         wp_reset_postdata();
-
-        echo $args['after_widget'];
     }
 
     /**
