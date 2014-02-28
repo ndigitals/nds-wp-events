@@ -441,6 +441,33 @@ class NDS_WP_Events
 
 
     /**
+     * Register site widget sidebars
+     */
+    public function widget_areas_init()
+    {
+        register_sidebar(
+            array(
+                 'name'          => __( 'Events Sidebar', 'events-sidebar' ),
+                 'id'            => 'events-sidebar',
+                 'before_widget' => '<aside class="events-sidebar">',
+                 'after_widget'  => '</aside>',
+                 'before_title'  => NULL,
+                 'after_title'   => NULL
+            )
+        );
+    }
+
+
+    /**
+     * Register a Events widget.
+     */
+    public function register_events_widgets()
+    {
+        register_widget( 'NDS_WP_Upcoming_Events_Widget' );
+    }
+
+
+    /**
      * Customize the frontend Events Query using Post Meta
      *
      * @param object $query data
@@ -470,31 +497,55 @@ class NDS_WP_Events
 
     }
 
-
     /**
-     * Register site widget sidebars
+     * Helper function that returns the query results for the most recent given number of
+     * events.
+     *
+     * @param int $post_count
+     *
+     * @return WP_Query
      */
-    public function widget_areas_init()
+    public function get_latest_events($post_count = 1)
     {
-        register_sidebar(
+        // http://codex.wordpress.org/Function_Reference/current_time
+        $current_time = current_time( 'timestamp' );
+
+        $query = new WP_Query(
             array(
-                 'name'          => __( 'Events Sidebar', 'events-sidebar' ),
-                 'id'            => 'events-sidebar',
-                 'before_widget' => '<aside class="events-sidebar">',
-                 'after_widget'  => '</aside>',
-                 'before_title'  => NULL,
-                 'after_title'   => NULL
+                'post_type'   => array( $this->plugin_post_type ),
+                'post_status' => 'publish',
+                'orderby'     => 'date',
+                'order'       => 'DESC',
+                'numberposts' => $post_count
             )
         );
+
+        $meta_query = array(
+            array(
+                'key'     => $this->plugin_post_type . '_end_date',
+                'value'   => $current_time,
+                'compare' => '>'
+            )
+        );
+        $query->set( 'meta_query', $meta_query );
+        $query->set( 'orderby', 'meta_value_num' );
+        $query->set( 'meta_key', $this->plugin_post_type . '_start_date' );
+        $query->set( 'order', 'ASC' );
+
+        return $query;
     }
 
-
     /**
-     * Register a Events widget.
+     * Helper function that provides an events image.
+     *
+     * @param        $post_id
+     * @param string $image_size
+     *
+     * @return mixed
      */
-    public function register_events_widgets()
+    public function get_event_image( $post_id, $image_size = 'medium' )
     {
-        register_widget( 'NDS_WP_Upcoming_Events_Widget' );
+        return wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $image_size );
     }
 
 }

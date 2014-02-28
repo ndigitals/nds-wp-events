@@ -19,6 +19,16 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
 {
 
     /**
+     * Widget template file name part. Should be prepended with
+     * the plugin_slug when used to find/load the widget template.
+     *
+     * @since   1.0.0
+     *
+     * @var     string
+     */
+    protected $template_filename_base = 'upcoming-widget';
+
+    /**
      * Register widget with WordPress.
      */
     function __construct()
@@ -28,6 +38,8 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
         $this->plugin           = NDS_WP_Events::get_instance();
         $this->plugin_slug      = $this->plugin->get_plugin_slug();
         $this->plugin_post_type = $this->plugin->get_plugin_post_type();
+        // Defining a class attribute for the widget template filename
+        $this->widget_template = $this->plugin_slug . '-' . $this->template_filename_base . '.php';
 
         parent::__construct(
               $this->plugin_post_type . '_upcoming_events_widget', // Base ID
@@ -47,6 +59,10 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
      */
     public function widget( $args, $instance )
     {
+        global $post;
+
+        $args['post_count'] = 4; // TODO: Setup widget admin to allow users to specify this.
+
         $title = apply_filters( 'widget_title', $instance['title'] );
 
         echo $args['before_widget'];
@@ -54,7 +70,27 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
         {
             echo $args['before_title'] . $title . $args['after_title'];
         }
-        echo __( 'Hello, World!', 'text_domain' );
+
+        $events = $this->plugin->get_latest_events($args['post_count']);
+
+        if ( $events->have_posts() )
+        {
+            while ( $events->have_posts() ) : $events->the_post();
+                if ( $overridden_template = locate_template( $this->widget_template ) ) {
+                    // locate_template() returns path to file
+                    // if either the child theme or the parent theme have overridden the template
+                    load_template( $overridden_template );
+                } else {
+                    // If neither the child nor parent theme have overridden the template,
+                    // we load the template from the 'templates' sub-directory of the plugin directory
+                    load_template( NDSWP_EVENTS_PATH . 'templates/' . $this->widget_template );
+                }
+            endwhile;
+        }
+
+        // Reset Post Data
+        wp_reset_postdata();
+
         echo $args['after_widget'];
     }
 
