@@ -6,11 +6,15 @@
  * Time: 10:52 PM
  */
 
+if (class_exists( 'ChromePhp' )) {
+    ChromePhp::log( $post );
+}
+
 $plugin = NDS_WP_Events::get_instance();
 $plugin_post_type = $plugin->get_plugin_post_type();
 
 $css_post_id = 'post-' . $post->ID;
-$css_oddeven_class = is_int($post->post_count/2) ? 'upcoming-event-odd' : 'upcoming-event-odd';
+$css_oddeven_class = is_int($post->found_posts/2) ? 'upcoming-event-odd' : 'upcoming-event-odd';
 
 $event_categories = get_the_term_list( $post->ID, $plugin_post_type . '_category' );
 $tag_list = get_the_term_list( $post->ID, $plugin_post_type . '_tag' );
