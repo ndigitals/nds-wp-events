@@ -510,16 +510,6 @@ class NDS_WP_Events
         // http://codex.wordpress.org/Function_Reference/current_time
         $current_time = current_time( 'timestamp' );
 
-        $query = new WP_Query(
-            array(
-                'post_type'   => array( $this->plugin_post_type ),
-                'post_status' => 'publish',
-                'orderby'     => 'date',
-                'order'       => 'DESC',
-                'numberposts' => $post_count
-            )
-        );
-
         $meta_query = array(
             array(
                 'key'     => $this->plugin_post_type . '_end_date',
@@ -527,12 +517,18 @@ class NDS_WP_Events
                 'compare' => '>'
             )
         );
-        $query->set( 'meta_query', $meta_query );
-        $query->set( 'orderby', 'meta_value_num' );
-        $query->set( 'meta_key', $this->plugin_post_type . '_start_date' );
-        $query->set( 'order', 'ASC' );
 
-        return $query;
+        return new WP_Query(
+            array(
+                'post_type'   => array( $this->plugin_post_type ),
+                'post_status' => 'publish',
+                'meta_query'  => $meta_query,
+                'orderby'     => 'meta_value_num',
+                'meta_key'    => $this->plugin_post_type . '_start_date',
+                'order'       => 'ASC',
+                'numberposts' => $post_count
+            )
+        );
     }
 
     /**

@@ -29,7 +29,7 @@ $event_end = get_post_meta( $post->ID, $plugin_post_type . '_end_date', true );
 $event_start_fmt = date( $date_format, $event_start ) . ' ' . date( $time_format, $event_start );
 $event_end_fmt = date( $date_format, $event_end ) . ' ' . date( $time_format, $event_end );
 
-$event_location = get_post_meta( $post->ID, $plugin_post_type . '_location', true );
+$event_location = '' /*get_post_meta( $post->ID, $plugin_post_type . '_location', true )*/;
 
 $event_url = get_post_meta( $post->ID, $plugin_post_type . '_url', true );
 $event_url = ( strlen( $event_url ) > 0 ) ? $event_url : get_permalink( $post->ID );
