@@ -80,11 +80,11 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
                 if ( $overridden_template = locate_template( $this->widget_template ) ) {
                     // locate_template() returns path to file
                     // if either the child theme or the parent theme have overridden the template
-                    load_template( $overridden_template );
+                    get_template_part( $overridden_template );
                 } else {
                     // If neither the child nor parent theme have overridden the template,
                     // we load the template from the 'templates' sub-directory of the plugin directory
-                    load_template( NDSWP_EVENTS_PATH . 'templates/' . $this->widget_template );
+                    get_template_part( NDSWP_EVENTS_PATH . 'templates/' . $this->widget_template );
                 }
             endwhile;
             echo '</ul>';
