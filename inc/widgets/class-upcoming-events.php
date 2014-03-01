@@ -71,7 +71,7 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
             echo $args['before_title'] . $title . $args['after_title'];
         }
 
-        $events = $this->plugin->get_latest_events(4);
+        $events = $this->plugin->get_latest_events($args['post_count']);
 
         if ( $events->have_posts() )
         {

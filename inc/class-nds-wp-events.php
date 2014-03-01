@@ -520,13 +520,14 @@ class NDS_WP_Events
 
         return new WP_Query(
             array(
-                'post_type'   => array( $this->plugin_post_type ),
-                'post_status' => 'publish',
-                'meta_query'  => $meta_query,
-                'orderby'     => 'meta_value_num',
-                'meta_key'    => $this->plugin_post_type . '_start_date',
-                'order'       => 'ASC',
-                'numberposts' => $post_count
+                'post_type'      => array( $this->plugin_post_type ),
+                'post_status'    => 'publish',
+                'meta_query'     => $meta_query,
+                'orderby'        => 'meta_value_num',
+                'meta_key'       => $this->plugin_post_type . '_start_date',
+                'order'          => 'ASC',
+                'posts_per_page' => $post_count,
+                'paged'          => $post_count
             )
         );
     }
