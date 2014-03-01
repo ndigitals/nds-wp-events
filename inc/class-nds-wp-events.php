@@ -527,7 +527,7 @@ class NDS_WP_Events
                 'meta_key'       => $this->plugin_post_type . '_start_date',
                 'order'          => 'ASC',
                 'posts_per_page' => $post_count,
-                'paged'          => $post_count
+                'paged'          => 1
             )
         );
     }
