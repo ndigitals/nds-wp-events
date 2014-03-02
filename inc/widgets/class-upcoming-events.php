@@ -59,7 +59,7 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
      */
     public function widget( $args, $instance )
     {
-        global $post;
+        global $post, $nwe_template_args;
 
         $args['post_count'] = 4; // TODO: Setup widget admin to allow users to specify this.
 
@@ -75,16 +75,70 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
 
         if ( $events->have_posts() )
         {
+            $row_counter = 0;
+
             echo '<ul>';
             while ( $events->have_posts() ) : $events->the_post();
+                $nwe_template_args['css_post_id']       = 'post-' . $post->ID;
+                $nwe_template_args['css_oddeven_class'] = is_int(
+                    ++$row_counter / 2
+                ) ? 'upcoming-event-even' : 'upcoming-event-odd';
+
+                $nwe_template_args['event_categories'] = get_the_term_list(
+                    $post->ID,
+                    $this->plugin_post_type . '_category'
+                );
+                $tag_list                                        = get_the_term_list(
+                    $post->ID,
+                    $this->plugin_post_type . '_tag'
+                );
+                $nwe_template_args['tag_list']         = $tag_list;
+
+                // - grab wp time format -
+                $date_format = get_option( 'date_format' );
+                $time_format = get_option( 'time_format' );
+                // - get meta field values for start/end date/time
+                $event_start = get_post_meta( $post->ID, $this->plugin_post_type . '_start_date', true );
+                $event_end   = get_post_meta( $post->ID, $this->plugin_post_type . '_end_date', true );
+                // - convert to pretty formats -
+                $nwe_template_args['event_start_fmt'] = date( $date_format, $event_start ) . ' ' . date(
+                        $time_format,
+                        $event_start
+                    );
+                $nwe_template_args['event_end_fmt']   = date( $date_format, $event_end ) . ' ' . date(
+                        $time_format,
+                        $event_end
+                    );
+
+                $nwe_template_args['event_location'] = get_post_meta(
+                    $post->ID,
+                    $this->plugin_post_type . '_location',
+                    true
+                );
+
+                $event_url                                      = get_post_meta(
+                    $post->ID,
+                    $this->plugin_post_type . '_url',
+                    true
+                );
+                $nwe_template_args['event_url']       = ( strlen( $event_url ) > 0 )
+                    ? $event_url
+                    : get_permalink(
+                        $post->ID
+                    );
+                $nwe_template_args['event_url_label'] = stristr(
+                    $tag_list,
+                    'Register'
+                ) ? 'Register' : 'More';
+
                 if ( $overridden_template = locate_template( $this->widget_template ) ) {
                     // locate_template() returns path to file
                     // if either the child theme or the parent theme have overridden the template
-                    get_template_part( $overridden_template );
+                    include( $overridden_template );
                 } else {
                     // If neither the child nor parent theme have overridden the template,
                     // we load the template from the 'templates' sub-directory of the plugin directory
-                    get_template_part( NDSWP_EVENTS_PATH . 'templates/' . $this->widget_template );
+                    include( NDSWP_EVENTS_PATH . 'templates/' . $this->widget_template );
                 }
             endwhile;
             echo '</ul>';
