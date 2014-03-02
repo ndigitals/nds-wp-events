@@ -86,11 +86,15 @@ class NDS_WP_Upcoming_Events_Widget extends WP_Widget
 
                 $nwe_template_args['event_categories'] = get_the_term_list(
                     $post->ID,
-                    $this->plugin_post_type . '_category'
+                    $this->plugin_post_type . '_category',
+                    '',
+                    ', '
                 );
-                $tag_list                                        = get_the_term_list(
+                $tag_list                              = get_the_term_list(
                     $post->ID,
-                    $this->plugin_post_type . '_tag'
+                    $this->plugin_post_type . '_tag',
+                    '',
+                    ', '
                 );
                 $nwe_template_args['tag_list']         = $tag_list;
 
