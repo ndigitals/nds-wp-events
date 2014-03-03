@@ -449,7 +449,7 @@ class NDS_WP_Events
             array(
                  'name'          => __( 'Events Sidebar', 'events-sidebar' ),
                  'id'            => 'events-sidebar',
-                 'before_widget' => '<aside class="events-sidebar">',
+                 'before_widget' => '<aside class="events-sidebar columns-4 right clearfix"">',
                  'after_widget'  => '</aside>',
                  'before_title'  => NULL,
                  'after_title'   => NULL
