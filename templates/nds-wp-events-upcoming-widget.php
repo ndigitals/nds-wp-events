@@ -17,5 +17,5 @@ global $nwe_template_args;
             if (strlen($nwe_template_args['event_location']) > 0) { echo "<br/>Location: ", $nwe_template_args['event_location']; }
         ?>
     </div>
-    <button class="btn"><a href="<?php echo $nwe_template_args['event_url']; ?>"><?php echo $nwe_template_args['event_url_label']; ?></a></button>
+    <button type="button" class="btn" onclick="window.location='<?php echo $nwe_template_args['event_url']; ?>'"><a href="<?php echo $nwe_template_args['event_url']; ?>"><?php echo $nwe_template_args['event_url_label']; ?></a></button>
 </li>
