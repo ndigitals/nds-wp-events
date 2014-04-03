@@ -480,7 +480,10 @@ class NDS_WP_Events
         global $wp_the_query;
 
         // Non-Admin Listing
-        if ( $wp_the_query === $query && !is_admin() && is_post_type_archive( $this->plugin_post_type ) )
+        if ( $wp_the_query === $query && !is_admin()
+            && ( is_post_type_archive( $this->plugin_post_type )
+                || is_tax( $this->plugin_post_type . '_tag'
+                || is_tax( $this->plugin_post_type . '_category' )) ) )
         {
             $meta_query = array(
                 array(
