@@ -3,7 +3,7 @@ Contributors: tnolte
 Donate link: http://www.ndigitals.com/
 Tags: events, events management, event management, calendar, upcoming events, nds, NDS WordPress Events, WordPress Events, simple
 Requires at least: 3.5.1
-Tested up to: 3.9.1
+Tested up to: 4.3
 Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
