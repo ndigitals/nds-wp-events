@@ -4,13 +4,13 @@
  * @author    Tim Nolte <tim.nolte@ndigitals.com>
  * @license   GPL-2.0+
  * @link      http://www.ndigitals.com
- * @copyright 2013 NDigital Solutions
+ * @copyright 2014 NDigital Solutions
  *
  * @wordpress-plugin
  *            Plugin Name: NDS WordPress Events
  *            Plugin URI:  http://www.ndigitals.com/wordpress/events-plugin/
  *            Description: A simple events module using WordPress custom post types
- *            Version:     1.0.0
+ *            Version:     1.0.1
  *            Author:      Tim Nolte
  *            Author URI:  http://www.ndigitals.com/
  *            Text Domain: nds-wp-events-locale
