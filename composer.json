@@ -1,0 +1,22 @@
+{
+  "name": "ndigitals/nds-wp-events",
+  "description": "WordPress Events Plugin",
+  "keywords": [
+    "WordPress",
+    "events"
+  ],
+  "homepage": "http://www.ndigitals.com/wordpress/events-plugin/",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0",
+  "authors": [
+    {
+      "name": "Tim Nolte",
+      "email": "tim.nolte@ndigitals.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.4",
+    "composer/installers": "~1.0"
+  }
+}
